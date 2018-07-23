@@ -1,0 +1,49 @@
+COMO USAR A API 1.0
+
+Caso não tenha:
+
+1 - Instalar Node js - https://nodejs.org/en/download/
+2 - Instalar MongoDb - https://www.mongodb.com/download-center?jmp=nav#atlas
+3 - (Opcional,porém de grande utilidade) robo3t(Gerenciar mongo) -  https://robomongo.org/download
+
+
+Mongo:
+
+1 - Executar no cmd o comando 'mongod' , para executar o serviço , caso já esteja automatico na maquina , não precisa
+2 - Não fechar terminal onde mongod está sendo executado
+3 - Executar em OUTRO cmd o comando 'mongo'
+4 - Não fechar o terminal novamente
+
+No projeto:
+
+1 - Clonar o projeto (importante)
+2 - Abrir um terminal/cmd dentro da pasta do projeto
+3 - NPM INSTALL (instalar todas as dependencias)
+4 - NPM START (Vai funcionar , porém sugiro o passo 5 ao invés deste)
+5 - Instalar NODEMON -  npm install -g nodemon (https://nodemon.io/) , a cada alteração no projeto ele executa sozinho , não precisando 'rebuildar'
+6 - no cmd dentro da pasta do projeto , executar 'nodemon'
+
+
+
+Dicas Úteis para o primeiro uso:
+
+1 - Usar postman ou outra ide de sua preferencia e setar o body como  x-www-form-urlenconded
+2 - METODO POST - http://localhost:3000/api/cadastrarUsuario  (rotas estão dentro da pasta routes e por enquanto tudo dentro de api)
+2.1 - Parâmetro para o POST 
+      username
+      password
+      email
+      photoUpload 
+      id_Perfil - não obrigatório 
+3 - METODO POST - http://localhost:3000/api/logar
+3.1 - Parâmetro para o POST 
+      username
+      password
+3.2 (importante) Ele vai retornar um token, copiar este token
+3.3  no header da requisição colocar uma key com o nome Authorization e no valor o token copiado
+
+4- Generico - MetodoPOST http://localhost:3000/api/cadastrarNomeDaModel e passar parametros (no arquivo api , dentro da pasta routes você pode verificar)
+5- Generico - Metodo GET http://localhost:3000/api/getAllNomeDaModelNoPlural
+6 -Generico - Metodo POST http://localhost:3000/api/getNomeDaModel e passar id como parametro
+
+
