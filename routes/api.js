@@ -41,6 +41,27 @@ router.post('/cadastrarUsuario', function(req, res) {
   }
 });
 
+router.put('/editarUsuario', passport.authenticate('jwt', { session: false}), function(req, res){
+  var token = getToken(req.headers);
+  if (token) {
+    Usuario.findById(req.body.id, function (err, usuario) {
+      if (err) return next(err);
+	  if (req.body.username) usuario.username = req.body.username
+	  if (req.body.password) usuario.password = req.body.password
+	  if (req.body.email) usuario.email = req.body.email
+	  if (req.body.photoUpload) usuario.photoUpload = req.body.photoUpload
+      usuario.save(function(err) {
+        if (err) {
+          return res.json({success: false, msg: err });
+        }
+        res.json({success: true, msg: 'Usuario alterado com sucesso.'});
+      });
+    });  
+  } else {
+    return res.status(403).send({success: false, msg: 'Unauthorized.'});
+  }
+});
+
 router.get('/getAllUsuarios', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = getToken(req.headers);
   if (token) {
