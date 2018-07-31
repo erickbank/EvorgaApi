@@ -145,6 +145,26 @@ router.post('/cadastrarPerfil', passport.authenticate('jwt', { session: false}),
   }
 });
 
+router.put('/editarPerfil', passport.authenticate('jwt', { session: false}), function(req, res){
+  var token = getToken(req.headers);
+  if (token) {
+    Perfil.findById(req.body.id, function (err, perfil) {
+      if (err) return next(err);
+	  if (req.body.exhibitor) perfil.exhibitor = req.body.exhibitor
+	  if (req.body.organizer) perfil.organizer = req.body.organizer
+	  if (req.body.planType) perfil.planType = req.body.planType
+	  if (req.body.subscriptionDate) perfil.subscriptionDate = req.body.subscriptionDate
+      perfil.save(function(err) {
+        if (err) {
+          return res.json({success: false, msg: err });
+        }
+        res.json({success: true, msg: 'Perfil alterado com sucesso.'});
+      });
+    });  
+  } else {
+    return res.status(403).send({success: false, msg: 'Unauthorized.'});
+  }
+});
 
 router.get('/getAllPerfis', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = getToken(req.headers);
