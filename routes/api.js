@@ -257,6 +257,17 @@ router.put('/editarEvento', passport.authenticate('jwt', { session: false}), fun
   }
 });
 
+router.delete('/deletarEvento', passport.authenticate('jwt', { session: false}), function(req, res){
+  var token = getToken(req.headers);
+  if (token) {
+    Evento.findOneAndRemove({ _id: req.body.id}, function (err) {
+      if (err) return next(err);
+	  res.json({success: true, msg: 'Evento removido com sucesso.'});
+    });  
+  } else {
+    return res.status(403).send({success: false, msg: 'Unauthorized.'});
+  }
+});
 
 router.get('/getAllEventos', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = getToken(req.headers);
