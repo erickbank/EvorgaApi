@@ -232,6 +232,30 @@ router.post('/cadastrarEvento', passport.authenticate('jwt', { session: false}),
   }
 });
 
+router.put('/editarEvento', passport.authenticate('jwt', { session: false}), function(req, res){
+  var token = getToken(req.headers);
+  if (token) {
+    Evento.findById(req.body.id, function (err, evento) {
+      if (err) return next(err);
+	  if (req.body.name) evento.name = req.body.name
+	  if (req.body.description) evento.description = req.body.description
+	  if (req.body.category) evento.category = req.body.category
+	  if (req.body.startDate) evento.startDate = req.body.startDate
+	  if (req.body.endDate) evento.endDate = req.body.endDate
+	  if (req.body.placement) evento.placement = req.body.placement
+	  if (req.body.logoUpload) evento.logoUpload = req.body.logoUpload
+	  if (req.body.planUpload) evento.planUpload = req.body.planUpload
+      evento.save(function(err) {
+        if (err) {
+          return res.json({success: false, msg: err });
+        }
+        res.json({success: true, msg: 'Evento alterado com sucesso.'});
+      });
+    });  
+  } else {
+    return res.status(403).send({success: false, msg: 'Unauthorized.'});
+  }
+});
 
 
 router.get('/getAllEventos', passport.authenticate('jwt', { session: false}), function(req, res) {
