@@ -62,6 +62,18 @@ router.put('/editarUsuario', passport.authenticate('jwt', { session: false}), fu
   }
 });
 
+router.delete('/deletarUsuario', passport.authenticate('jwt', { session: false}), function(req, res){
+  var token = getToken(req.headers);
+  if (token) {
+    Usuario.findOneAndRemove({ _id: req.body.id}, function (err) {
+      if (err) return next(err);
+	  res.json({success: true, msg: 'Usuario removido com sucesso.'});
+    });  
+  } else {
+    return res.status(403).send({success: false, msg: 'Unauthorized.'});
+  }
+});
+
 router.get('/getAllUsuarios', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = getToken(req.headers);
   if (token) {
