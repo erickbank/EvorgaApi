@@ -336,6 +336,18 @@ router.put('/editarParticipacao', passport.authenticate('jwt', { session: false}
   }
 });
 
+router.delete('/deletarParticipacao', passport.authenticate('jwt', { session: false}), function(req, res){
+  var token = getToken(req.headers);
+  if (token) {
+    Paticipacao.findOneAndRemove({ _id: req.body.id}, function (err) {
+      if (err) return next(err);
+	  res.json({success: true, msg: 'Paticipacao removido com sucesso.'});
+    });  
+  } else {
+    return res.status(403).send({success: false, msg: 'Unauthorized.'});
+  }
+});
+
 router.get('/getAllParticipacoes', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = getToken(req.headers);
   if (token) {
