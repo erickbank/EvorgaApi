@@ -166,6 +166,18 @@ router.put('/editarPerfil', passport.authenticate('jwt', { session: false}), fun
   }
 });
 
+router.delete('/deletarPerfil', passport.authenticate('jwt', { session: false}), function(req, res){
+  var token = getToken(req.headers);
+  if (token) {
+    Perfil.findOneAndRemove({ _id: req.body.id}, function (err) {
+      if (err) return next(err);
+	  res.json({success: true, msg: 'Perfil removido com sucesso.'});
+    });  
+  } else {
+    return res.status(403).send({success: false, msg: 'Unauthorized.'});
+  }
+});
+
 router.get('/getAllPerfis', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = getToken(req.headers);
   if (token) {
