@@ -214,7 +214,14 @@ router.post('/cadastrarEvento', passport.authenticate('jwt', { session: false}),
       category: req.body.category,
       startDate: req.body.startDate,
 	  endDate: req.body.endDate,
-      placement: req.body.placement,
+      adress: req.body.adress,
+	  neighborhood: req.body.neighborhood,
+	  number: req.body.number,
+	  addressDetail: req.body.addressDetail,
+	  city: req.body.city,
+	  state: req.body.state,
+	  country: req.body.country,
+	  zipCode: req.body.zipCode,
       logoUpload: req.body.logoUpload,
       planUpload: req.body.planUpload,
 	  id_Usuario: req.body.id_Usuario
@@ -242,7 +249,14 @@ router.put('/editarEvento', passport.authenticate('jwt', { session: false}), fun
 	  if (req.body.category) evento.category = req.body.category
 	  if (req.body.startDate) evento.startDate = req.body.startDate
 	  if (req.body.endDate) evento.endDate = req.body.endDate
-	  if (req.body.placement) evento.placement = req.body.placement
+	  if (req.body.adress) evento.adress = req.body.adress
+	  if (req.body.neighborhood) evento.neighborhood = req.body.neighborhood
+	  if (req.body.number) evento.number = req.body.number
+	  if (req.body.addressDetail) evento.addressDetail = req.body.addressDetail
+	  if (req.body.city) evento.city = req.body.city
+	  if (req.body.state) evento.state = req.body.state
+	  if (req.body.country) evento.country = req.body.country
+	  if (req.body.zipCode) evento.zipCode = req.body.zipCode
 	  if (req.body.logoUpload) evento.logoUpload = req.body.logoUpload
 	  if (req.body.planUpload) evento.planUpload = req.body.planUpload
       evento.save(function(err) {
