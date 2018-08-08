@@ -26,7 +26,12 @@ router.post('/cadastrarUsuario', function(req, res) {
       password: req.body.password,
 	  email:req.body.email,
 	  photoUpload: req.body.photoUpload,
-	  id_Perfil: req.body.id_Perfil  
+	  exhibitor: req.body.exhibitor
+	  organizer: req.body.organizer
+	  planType: req.body.planType
+	  subscriptionDate: req.body.subscriptionDate
+	  ramoExpositor: req.body.ramoExpositor
+	  
     });
     novoUsuario.save(function(err) {
       if (err) {
@@ -50,6 +55,11 @@ router.put('/editarUsuario', passport.authenticate('jwt', { session: false}), fu
 	  if (req.body.password) usuario.password = req.body.password
 	  if (req.body.email) usuario.email = req.body.email
 	  if (req.body.photoUpload) usuario.photoUpload = req.body.photoUpload
+	  if (req.body.exhibitor) usuario.exhibitor = req.body.exhibitor
+	  if (req.body.organizer) usuario.organizer = req.body.organizer
+	  if (req.body.planType) usuario.planType = req.body.planType
+	  if (req.body.subscriptionDate) usuario.subscriptionDate = req.body.subscriptionDate
+	  if (req.body.ramoExpositor) usuario.ramoExpositor = req.body.ramoExpositor
       usuario.save(function(err) {
         if (err) {
           return res.json({success: false, msg: err });
