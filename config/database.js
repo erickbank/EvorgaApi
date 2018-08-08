@@ -1,4 +1,4 @@
 module.exports = {
   'secret':'nodeauthsecret',
-  'database': 'mongodb://localhost/node-auth'
+  'database': 'mongodb://evorga:fiapeumamerda@naboo.mongodb.umbler.com:48558/evorgabd'
 };

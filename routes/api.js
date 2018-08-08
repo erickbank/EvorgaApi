@@ -12,7 +12,7 @@ var Participacao = require("../models/Participacao");
 
 router.post('/cadastrarUsuario', function(req, res) {
 	
-  if (!req.body.username || !req.body.password || !req.body.email || !req.body.photoUpload) {
+  if (!req.body.username || !req.body.password || !req.body.email) {
     res.json({success: false, msg: 'Erro... Campos Obrigatórios não preenchidos'});
   } else {
 	  
@@ -26,10 +26,10 @@ router.post('/cadastrarUsuario', function(req, res) {
       password: req.body.password,
 	  email:req.body.email,
 	  photoUpload: req.body.photoUpload,
-	  exhibitor: req.body.exhibitor
-	  organizer: req.body.organizer
-	  planType: req.body.planType
-	  subscriptionDate: req.body.subscriptionDate
+	  exhibitor: req.body.exhibitor,
+	  organizer: req.body.organizer,
+	  planType: req.body.planType,
+	  subscriptionDate: req.body.subscriptionDate,
 	  ramoExpositor: req.body.ramoExpositor
 	  
     });
