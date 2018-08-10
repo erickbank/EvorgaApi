@@ -28,9 +28,37 @@ var EventoSchema = new Schema({
 	required: true,
 	type: Date
   },
-  placement:{
+  adress:{
+	type: String,
+    required: true
+  },
+  neighborhood:{
+	type: String,
+    required: true
+  },
+  number:{
+	type: int,
+    required: true
+  },
+  addressDetail:{
 	type: String,
     required: false
+  },
+  city:{
+	type: String,
+    required: true
+  },
+  state:{
+	type: String,
+    required: true
+  },
+  country:{
+	type: String,
+    required: true
+  },
+  zipCode:{
+	type: String,
+    required: true
   },
   logoUpload: {
     type: String,

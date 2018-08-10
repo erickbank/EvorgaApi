@@ -27,10 +27,28 @@ var UsuarioSchema = new Schema({
     type: String,
     required: false
   },  
-  id_Perfil:{
-	type: mongoose.Schema.Types.ObjectId, ref: 'Perfil',
-    required: false	
+  exhibitor: {
+    type: Boolean,
+    required: true
+  },
+  organizer: {
+    required: true,
+	type: Boolean,
+  },  
+  planType: {
+    type: String,
+    required: true
+  },
+  subscriptionDate: {
+    required: false,
+	type: Date,
+	default: Date.now
+  },
+  ramoExpositor: {
+    type: String,
+    required: false
   }
+  
 });
 
 UsuarioSchema.pre('save', function (next) {
