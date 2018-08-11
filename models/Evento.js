@@ -37,7 +37,7 @@ var EventoSchema = new Schema({
     required: true
   },
   number:{
-	type: int,
+	type: Number,
     required: true
   },
   addressDetail:{
