@@ -18,19 +18,35 @@ var UsuarioSchema = new Schema({
         type: String,
         required: true
     },
-   email: {
+	name:{
+	  type: String,
+	  required: false
+	},
+	gender:{
+		type: String,
+		required: false
+	},
+	birthDate:{
+		type: Date,
+		required: false
+	},
+	cpf:{
+		type: String,
+		required: false
+	},
+    email: {
 	   type: String,
 	   required:true,
 	   unique:true
    },
-   photoUpload: {
+    photoUpload: {
     type: String,
     required: false
-  },  
-  exhibitor: {
+   },  
+   exhibitor: {
     type: Boolean,
     required: true
-  },
+   },
   organizer: {
     required: true,
 	type: Boolean,
@@ -47,9 +63,21 @@ var UsuarioSchema = new Schema({
   ramoExpositor: {
     type: String,
     required: false
-  }
+  },
+  phone:{
+	  type: String,
+	  required: false
+  },
+  cellPhone: {
+	  type: String,
+	  required: false
+  },
+ events: {
+	 type: Array,
+	 default: []
+ }
   
-});
+})
 
 UsuarioSchema.pre('save', function (next) {
     var usuario = this;

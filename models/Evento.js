@@ -68,10 +68,14 @@ var EventoSchema = new Schema({
     type: String,
     required: false
   },
-   id_Usuario:{
-	type: mongoose.Schema.Types.ObjectId, ref: 'Usuario',
-    required: false	
-  }
+   spaces:[
+    {
+ 	 idExpositor: mongoose.Schema.Types.ObjectId ,
+     ocuppied: Boolean,
+     price: Number,
+     description: String	 
+    }
+   ]
 });
 
 module.exports = mongoose.model('Evento', EventoSchema);

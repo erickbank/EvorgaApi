@@ -6,9 +6,7 @@ var express = require('express');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
 var Usuario = require("../models/Usuario");
-var Perfil = require("../models/Perfil");
 var Evento = require("../models/Evento");
-var Participacao = require("../models/Participacao");
 
 router.post('/cadastrarUsuario', function(req, res) {
 	
@@ -30,7 +28,13 @@ router.post('/cadastrarUsuario', function(req, res) {
 	  organizer: req.body.organizer,
 	  planType: req.body.planType,
 	  subscriptionDate: req.body.subscriptionDate,
-	  ramoExpositor: req.body.ramoExpositor
+	  ramoExpositor: req.body.ramoExpositor,
+	  name: req.body.name,
+	  gender: req.body.gender,
+	  birthDate: req.body.birthDate,
+	  cpf: req.body.cpf,
+	  phone: req.body.phone,
+	  cellPhone: req.body.cellPhone
 	  
     });
     novoUsuario.save(function(err) {
@@ -60,6 +64,13 @@ router.put('/editarUsuario', passport.authenticate('jwt', { session: false}), fu
 	  if (req.body.planType) usuario.planType = req.body.planType
 	  if (req.body.subscriptionDate) usuario.subscriptionDate = req.body.subscriptionDate
 	  if (req.body.ramoExpositor) usuario.ramoExpositor = req.body.ramoExpositor
+	  if (req.body.name) usuario.name = req.body.name
+	  if (req.body.gender) usuario.gender = req.body.gender
+	  if (req.body.birthDate) usuario.birthDate = req.body.birthDate
+	  if (req.body.cpf) usuario.cpf = req.body.cpf
+	  if (req.body.phone) usuario.phone = req.body.phone
+	  if (req.body.cellPhone) usuario.cellPhone = req.body.cellPhone
+	  
       usuario.save(function(err) {
         if (err) {
           return res.json({success: false, msg: err });
@@ -108,6 +119,42 @@ router.post('/getUsuario', passport.authenticate('jwt', { session: false}), func
   }
 });
 
+router.put('/participarEvento', passport.authenticate('jwt', { session: false}), function(req, res){
+  var token = getToken(req.headers);
+  if (token) {
+   Usuario.findByIdAndUpdate(
+   { _id: req.body.id }, 
+   { $push: { events: req.body.eventId  } },
+  function (error) {
+        if (error) {
+         	res.json({success: false, msg: error});
+        } else {
+           	res.json({success: true, msg: 'Usuário inserido no evento'});
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'Unauthorized.'});
+  }
+});
+
+router.put('/removerParticipacaoEvento', passport.authenticate('jwt', { session: false}), function(req, res){
+  var token = getToken(req.headers);
+  if (token) {
+   Usuario.findByIdAndUpdate(
+   { _id: req.body.id }, 
+   { $pull: { events: req.body.eventId  } },
+  function (error) {
+        if (error) {
+         	res.json({success: false, msg: error});
+        } else {
+           	res.json({success: true, msg: 'Usuário removido do evento'});
+        }
+    });
+  } else {
+    return res.status(403).send({success: false, msg: 'Unauthorized.'});
+  }
+});
+
 router.post('/logar', function(req, res) {
   Usuario.findOne({
     username: req.body.username
@@ -129,88 +176,24 @@ router.post('/logar', function(req, res) {
   });
 });
 
-
-router.post('/cadastrarPerfil', passport.authenticate('jwt', { session: false}), function(req, res) {
+router.put('/criarPlanta', passport.authenticate('jwt', { session: false}), function(req, res){
   var token = getToken(req.headers);
   if (token) {
-	if (!req.body.exhibitor || !req.body.organizer || !req.body.planType) {
-    res.json({success: false, msg: 'Erro... Campos Obrigatórios não preenchidos'});
-  } else {
-    var novoPerfil = new Perfil({
-      exhibitor: req.body.exhibitor,
-      organizer: req.body.organizer,
-      planType: req.body.planType,
-      subscriptionDate: req.body.subscriptionDate
-    });
-
-    novoPerfil.save(function(err) {
-      if (err) {
-        return res.json({success: false, msg: 'Erro ao Inserir Perfil'});
-      }
-      res.json({success: true, msg: 'Perfil inserido com Sucesso'});
-    });
-  }
-  } else {
-    return res.status(403).send({success: false, msg: 'Unauthorized.'});
-  }
-});
-
-router.put('/editarPerfil', passport.authenticate('jwt', { session: false}), function(req, res){
-  var token = getToken(req.headers);
-  if (token) {
-    Perfil.findById(req.body.id, function (err, perfil) {
-      if (err) return next(err);
-	  if (req.body.exhibitor) perfil.exhibitor = req.body.exhibitor
-	  if (req.body.organizer) perfil.organizer = req.body.organizer
-	  if (req.body.planType) perfil.planType = req.body.planType
-	  if (req.body.subscriptionDate) perfil.subscriptionDate = req.body.subscriptionDate
-      perfil.save(function(err) {
-        if (err) {
-          return res.json({success: false, msg: err });
+   Evento.findByIdAndUpdate(
+   { _id: req.body.id }, 
+   { $push: { spaces: req.body.spaces } },
+  function (error) {
+        if (error) {
+         	res.json({success: false, msg: error});
+        } else {
+           	res.json({success: true, msg: 'Planta inserida com sucesso'});
         }
-        res.json({success: true, msg: 'Perfil alterado com sucesso.'});
-      });
-    });  
-  } else {
-    return res.status(403).send({success: false, msg: 'Unauthorized.'});
-  }
-});
-
-router.delete('/deletarPerfil', passport.authenticate('jwt', { session: false}), function(req, res){
-  var token = getToken(req.headers);
-  if (token) {
-    Perfil.findOneAndRemove({ _id: req.body.id}, function (err) {
-      if (err) return next(err);
-	  res.json({success: true, msg: 'Perfil removido com sucesso.'});
-    });  
-  } else {
-    return res.status(403).send({success: false, msg: 'Unauthorized.'});
-  }
-});
-
-router.get('/getAllPerfis', passport.authenticate('jwt', { session: false}), function(req, res) {
-  var token = getToken(req.headers);
-  if (token) {
-    Perfil.find(function (err, perfil) {
-      if (err) return next(err);
-      res.json(perfil);
     });
   } else {
     return res.status(403).send({success: false, msg: 'Unauthorized.'});
   }
 });
 
-router.post('/getPerfil', passport.authenticate('jwt', { session: false}), function(req, res) {
-  var token = getToken(req.headers);
-  if (token) {
-	Perfil.findById(req.body.id, function (err, perfil) {
-     if (err) return next(err);
-      res.json(perfil);
-	} );
-  } else {
-    return res.status(403).send({success: false, msg: 'Unauthorized.'});
-  }
-});
 
 router.post('/cadastrarEvento', passport.authenticate('jwt', { session: false}), function(req, res) {
   var token = getToken(req.headers);
@@ -316,86 +299,6 @@ router.post('/getEvento', passport.authenticate('jwt', { session: false}), funct
     return res.status(403).send({success: false, msg: 'Unauthorized.'});
   }
 });
-
-router.post('/cadastrarParticipacao', passport.authenticate('jwt', { session: false}), function(req, res) {
-  var token = getToken(req.headers);
-  if (token) {
-	if (!req.body.id_Usuario || !req.body.id_Evento) {
-    res.json({success: false, msg: 'Erro... Campos Obrigatórios não preenchidos'});
-  } else {
-    var novoParticipacao = new Participacao({
-      id_Usuario: req.body.id_Usuario,
-      id_Evento: req.body.id_Evento,
-
-    });
-
-    novoParticipacao.save(function(err) {
-      if (err) {
-        return res.json({success: false, msg: 'Erro ao Inserir Participacao'});
-      }
-      res.json({success: true, msg: 'Participacao inserido com Sucesso'});
-    });
-  }
-  } else {
-    return res.status(403).send({success: false, msg: 'Unauthorized.'});
-  }
-});
-
-router.put('/editarParticipacao', passport.authenticate('jwt', { session: false}), function(req, res){
-  var token = getToken(req.headers);
-  if (token) {
-    Paticipacao.findById(req.body.id, function (err, participacao) {
-      if (err) return next(err);
-	  if (req.body.id_Usuario) paticipacao.id_Usuario = req.body.id_Usuario
-	  if (req.body.id_Evento) paticipacao.id_Evento = req.body.id_Evento
-      participacao.save(function(err) {
-        if (err) {
-          return res.json({success: false, msg: err });
-        }
-        res.json({success: true, msg: 'Participação alterada com sucesso.'});
-      });
-    });  
-  } else {
-    return res.status(403).send({success: false, msg: 'Unauthorized.'});
-  }
-});
-
-router.delete('/deletarParticipacao', passport.authenticate('jwt', { session: false}), function(req, res){
-  var token = getToken(req.headers);
-  if (token) {
-    Paticipacao.findOneAndRemove({ _id: req.body.id}, function (err) {
-      if (err) return next(err);
-	  res.json({success: true, msg: 'Paticipacao removido com sucesso.'});
-    });  
-  } else {
-    return res.status(403).send({success: false, msg: 'Unauthorized.'});
-  }
-});
-
-router.get('/getAllParticipacoes', passport.authenticate('jwt', { session: false}), function(req, res) {
-  var token = getToken(req.headers);
-  if (token) {
-    Participacao.find(function (err, participacao) {
-      if (err) return next(err);
-      res.json(participacao);
-    });
-  } else {
-    return res.status(403).send({success: false, msg: 'Unauthorized.'});
-  }
-});
-
-router.post('/getParticipacao', passport.authenticate('jwt', { session: false}), function(req, res) {
-  var token = getToken(req.headers);
-  if (token) {
-	Participacao.findById(req.body.id, function (err, participacao) {
-     if (err) return next(err);
-      res.json(participacao);
-	} );
-  } else {
-    return res.status(403).send({success: false, msg: 'Unauthorized.'});
-  }
-});
-
 
 getToken = function (headers) {
   if (headers && headers.authorization) {
