@@ -53,7 +53,7 @@ var UsuarioSchema = new Schema({
   },  
   planType: {
     type: String,
-    required: true
+    required: false
   },
   subscriptionDate: {
     required: false,
@@ -66,11 +66,11 @@ var UsuarioSchema = new Schema({
   },
   phone:{
 	  type: String,
-	  required: false
+	  required: true
   },
   cellPhone: {
 	  type: String,
-	  required: false
+	  required: true
   },
  events: {
 	 type: Array,

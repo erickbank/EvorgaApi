@@ -10,7 +10,7 @@ var Evento = require("../models/Evento");
 
 router.post('/cadastrarUsuario', function(req, res) {
 	
-  if (!req.body.username || !req.body.password || !req.body.email) {
+  if (!req.body.username || !req.body.password || !req.body.email || !req.body.phone || !req.body.cellPhone) {
     res.json({success: false, msg: 'Erro... Campos Obrigatórios não preenchidos'});
   } else {
 	  
