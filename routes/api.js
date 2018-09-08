@@ -207,7 +207,7 @@ router.post('/cadastrarEvento', passport.authenticate('jwt', { session: false}),
       category: req.body.category,
       startDate: req.body.startDate,
 	  endDate: req.body.endDate,
-      adress: req.body.adress,
+      address: req.body.address,
 	  neighborhood: req.body.neighborhood,
 	  number: req.body.number,
 	  addressDetail: req.body.addressDetail,
@@ -217,14 +217,14 @@ router.post('/cadastrarEvento', passport.authenticate('jwt', { session: false}),
 	  zipCode: req.body.zipCode,
       logoUpload: req.body.logoUpload,
       planUpload: req.body.planUpload,
-	  id_Usuario: req.body.id_Usuario
+	  planSize: req.body.planSize
     });
 
     novoEvento.save(function(err) {
       if (err) {
         return res.json({success: false, msg: err + 'Erro ao Inserir Evento'});
       }
-      res.json({success: true, msg: 'Evento inserido com Sucesso'});
+      res.json({success: true, msg: 'Evento inserido com Sucesso', eventId: novoEvento._id });
     });
   }
   } else {
@@ -242,7 +242,7 @@ router.put('/editarEvento', passport.authenticate('jwt', { session: false}), fun
 	  if (req.body.category) evento.category = req.body.category
 	  if (req.body.startDate) evento.startDate = req.body.startDate
 	  if (req.body.endDate) evento.endDate = req.body.endDate
-	  if (req.body.adress) evento.adress = req.body.adress
+	  if (req.body.address) evento.address = req.body.adress
 	  if (req.body.neighborhood) evento.neighborhood = req.body.neighborhood
 	  if (req.body.number) evento.number = req.body.number
 	  if (req.body.addressDetail) evento.addressDetail = req.body.addressDetail
@@ -252,6 +252,7 @@ router.put('/editarEvento', passport.authenticate('jwt', { session: false}), fun
 	  if (req.body.zipCode) evento.zipCode = req.body.zipCode
 	  if (req.body.logoUpload) evento.logoUpload = req.body.logoUpload
 	  if (req.body.planUpload) evento.planUpload = req.body.planUpload
+	  if (req.body.planSize) evento.planSize = req.body.planSize
       evento.save(function(err) {
         if (err) {
           return res.json({success: false, msg: err });

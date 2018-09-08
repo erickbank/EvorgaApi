@@ -28,7 +28,7 @@ var EventoSchema = new Schema({
 	required: true,
 	type: Date
   },
-  adress:{
+  address:{
 	type: String,
     required: true
   },
@@ -68,6 +68,10 @@ var EventoSchema = new Schema({
     type: String,
     required: false
   },
+    planSize:{
+	type: String,
+    required: false	
+   },
    spaces:[
     {
  	 idExpositor: mongoose.Schema.Types.ObjectId ,
