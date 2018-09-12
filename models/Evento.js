@@ -79,7 +79,15 @@ var EventoSchema = new Schema({
      price: Number,
      description: String	 
     }
-   ]
+   ],
+   toDoListDescription:{
+	   type: String,
+	   required: false
+   },
+   toDoListStatus:{
+	   type: Boolean,
+	   required: false
+   }
 });
 
 module.exports = mongoose.model('Evento', EventoSchema);
