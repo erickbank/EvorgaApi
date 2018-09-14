@@ -74,8 +74,7 @@ var EventoSchema = new Schema({
    },
    spaces:[
     {
- 	 idExpositor: mongoose.Schema.Types.ObjectId ,
-     ocuppied: Boolean,
+ 	 idExpositor: String ,
      price: Number,
      description: String	 
     }
