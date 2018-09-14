@@ -217,7 +217,8 @@ router.post('/cadastrarEvento', passport.authenticate('jwt', { session: false}),
 	  zipCode: req.body.zipCode,
       logoUpload: req.body.logoUpload,
       planUpload: req.body.planUpload,
-	  planSize: req.body.planSize
+	  planSize: req.body.planSize,
+	  spaces: req.body.spaces
     });
 
     novoEvento.save(function(err) {
