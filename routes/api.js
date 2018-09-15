@@ -83,7 +83,7 @@ router.put('/editarUsuario', passport.authenticate('jwt', { session: false}), fu
   }
 });
 
-router.delete('/deletarUsuario', passport.authenticate('jwt', { session: false}), function(req, res){
+router.post('/deletarUsuario', passport.authenticate('jwt', { session: false}), function(req, res){
   var token = getToken(req.headers);
   if (token) {
     Usuario.findOneAndRemove({ _id: req.body.id}, function (err) {
@@ -268,7 +268,7 @@ router.put('/editarEvento', passport.authenticate('jwt', { session: false}), fun
   }
 });
 
-router.delete('/deletarEvento', passport.authenticate('jwt', { session: false}), function(req, res){
+router.post('/deletarEvento', passport.authenticate('jwt', { session: false}), function(req, res){
   var token = getToken(req.headers);
   if (token) {
     Evento.findOneAndRemove({ _id: req.body.id}, function (err) {
