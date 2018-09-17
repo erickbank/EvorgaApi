@@ -166,7 +166,9 @@ router.post('/logar', function(req, res) {
     } else {
       usuario.comparePassword(req.body.password, function (err, isMatch) {
         if (isMatch && !err) {
-          var token = jwt.sign(usuario.toJSON(), config.secret);
+		  var user = usuario;
+		  user.photoUpload = '';
+          var token = jwt.sign( user.toJSON(), config.secret);
           res.json({success: true, token: 'JWT ' + token, user: usuario});
         } else {
           res.status(401).send({success: false, msg: 'Autenticação falhou. Senha Errada.'});
