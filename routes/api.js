@@ -220,7 +220,9 @@ router.post('/cadastrarEvento', passport.authenticate('jwt', { session: false}),
       logoUpload: req.body.logoUpload,
       planUpload: req.body.planUpload,
 	  planSize: req.body.planSize,
-	  spaces: req.body.spaces
+	  spaces: req.body.spaces,
+	  planUpload2: req.body.planUpload2,
+	  logoUpload2: req.body.logoUpload2
     });
 
     novoEvento.save(function(err) {
@@ -258,6 +260,8 @@ router.put('/editarEvento', passport.authenticate('jwt', { session: false}), fun
 	  if (req.body.planSize) evento.planSize = req.body.planSize
 	  if (req.body.toDoListDescription) evento.toDoListDescription = req.body.toDoListDescription
 	  if (req.body.toDoListStatus) evento.toDoListStatus = req.body.toDoListStatus
+	  if (req.body.logoUpload2) evento.logoUpload2 = req.body.logoUpload2
+	  if (req.body.planUpload2) evento.planUpload2 = req.body.planUpload2
       evento.save(function(err) {
         if (err) {
           return res.json({success: false, msg: err });
