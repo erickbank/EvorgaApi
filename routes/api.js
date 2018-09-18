@@ -217,8 +217,6 @@ router.post('/cadastrarEvento', passport.authenticate('jwt', { session: false}),
 	  state: req.body.state,
 	  country: req.body.country,
 	  zipCode: req.body.zipCode,
-      logoUpload: req.body.logoUpload,
-      planUpload: req.body.planUpload,
 	  planSize: req.body.planSize,
 	  spaces: req.body.spaces,
 	  planUpload2: req.body.planUpload2,
@@ -255,8 +253,6 @@ router.put('/editarEvento', passport.authenticate('jwt', { session: false}), fun
 	  if (req.body.state) evento.state = req.body.state
 	  if (req.body.country) evento.country = req.body.country
 	  if (req.body.zipCode) evento.zipCode = req.body.zipCode
-	  if (req.body.logoUpload) evento.logoUpload = req.body.logoUpload
-	  if (req.body.planUpload) evento.planUpload = req.body.planUpload
 	  if (req.body.planSize) evento.planSize = req.body.planSize
 	  if (req.body.toDoListDescription) evento.toDoListDescription = req.body.toDoListDescription
 	  if (req.body.toDoListStatus) evento.toDoListStatus = req.body.toDoListStatus

@@ -60,14 +60,6 @@ var EventoSchema = new Schema({
 	type: String,
     required: true
   },
-  logoUpload: {
-    type: String,
-    required: false
-  },
-   planUpload: {
-    type: String,
-    required: false
-  },
     planSize:{
 	type: String,
     required: false	
