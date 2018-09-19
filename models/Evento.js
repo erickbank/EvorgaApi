@@ -71,22 +71,14 @@ var EventoSchema = new Schema({
      description: String	 
     }
    ],
-   toDoListDescription:{
-	   type: String,
-	   required: false
-   },
-   toDoListStatus:{
-	   type: Boolean,
-	   required: false
-   },
-    planUpload2: {
-	 type: Array,
-	 default: []
- },
-  logoUpload2: {
-	 type: Array,
-	 default: []
- }
+  logoUpload: {
+    type: String,
+    required: false
+  },
+   planUpload: {
+    type: String,
+    required: false
+  },
 });
 
 module.exports = mongoose.model('Evento', EventoSchema);
