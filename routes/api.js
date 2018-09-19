@@ -254,6 +254,8 @@ router.put('/editarEvento', passport.authenticate('jwt', { session: false}), fun
 	  if (req.body.logoUpload) evento.logoUpload = req.body.logoUpload
 	  if (req.body.planUpload) evento.planUpload = req.body.planUpload
 	  if (req.body.planSize) evento.planSize = req.body.planSize
+	  if (req.body.spaces) evento.spaces = req.body.spaces
+	  
       evento.save(function(err) {
         if (err) {
           return res.json({success: false, msg: err });
