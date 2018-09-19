@@ -79,6 +79,10 @@ var EventoSchema = new Schema({
     type: String,
     required: false
   },
+    toDoList: {
+    type: Array,
+	default: []
+  }
 });
 
 module.exports = mongoose.model('Evento', EventoSchema);
