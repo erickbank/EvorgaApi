@@ -82,6 +82,10 @@ var EventoSchema = new Schema({
     toDoList: {
     type: Array,
 	default: []
+  },
+    feedBacks: {
+    type: Array,
+	default: []
   }
 });
 

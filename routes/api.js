@@ -258,6 +258,7 @@ router.put('/editarEvento', passport.authenticate('jwt', { session: false}), fun
 	  if (req.body.planSize) evento.planSize = req.body.planSize
 	  if (req.body.spaces) evento.spaces = req.body.spaces
 	  if (req.body.toDoList) evento.toDoList = req.body.toDoList
+	  if (req.body.feedBacks) evento.feedBacks = req.body.feedBacks
 	  
       evento.save(function(err) {
         if (err) {
