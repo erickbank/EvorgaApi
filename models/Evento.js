@@ -86,6 +86,10 @@ var EventoSchema = new Schema({
     feedBacks: {
     type: Array,
 	default: []
+  },
+    objList: {
+    type: Array,
+	default: []
   }
 });
 

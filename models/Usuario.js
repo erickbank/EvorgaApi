@@ -75,7 +75,11 @@ var UsuarioSchema = new Schema({
  events: {
 	 type: Array,
 	 default: []
- }
+ },
+   convites: {
+    type: Array,
+	default: []
+  }
   
 })
 

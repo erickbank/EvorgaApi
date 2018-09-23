@@ -70,6 +70,7 @@ router.put('/editarUsuario', passport.authenticate('jwt', { session: false}), fu
 	  if (req.body.cpf) usuario.cpf = req.body.cpf
 	  if (req.body.phone) usuario.phone = req.body.phone
 	  if (req.body.cellPhone) usuario.cellPhone = req.body.cellPhone
+	  if (req.body.convites) usuario.convites = req.body.convites
 	  
       usuario.save(function(err) {
         if (err) {
@@ -259,6 +260,7 @@ router.put('/editarEvento', passport.authenticate('jwt', { session: false}), fun
 	  if (req.body.spaces) evento.spaces = req.body.spaces
 	  if (req.body.toDoList) evento.toDoList = req.body.toDoList
 	  if (req.body.feedBacks) evento.feedBacks = req.body.feedBacks
+	  if (req.body.objList) evento.objList = req.body.objList
 	  
       evento.save(function(err) {
         if (err) {
