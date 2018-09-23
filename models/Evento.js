@@ -95,6 +95,10 @@ var EventoSchema = new Schema({
     type: Number,
 	default: 0
   },
+   organizerCellPhone: {
+	  type: String,
+	  default: ""
+  }
 });
 
 module.exports = mongoose.model('Evento', EventoSchema);

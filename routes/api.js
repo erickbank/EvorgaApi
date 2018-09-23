@@ -221,7 +221,8 @@ router.post('/cadastrarEvento', passport.authenticate('jwt', { session: false}),
 	  country: req.body.country,
 	  zipCode: req.body.zipCode,
 	  planSize: req.body.planSize,
-	  spaces: req.body.spaces
+	  spaces: req.body.spaces,
+	  organizerCellPhone: req.body.organizerCellPhone
     });
 
     novoEvento.save(function(err) {
@@ -261,6 +262,7 @@ router.put('/editarEvento', passport.authenticate('jwt', { session: false}), fun
 	  if (req.body.toDoList) evento.toDoList = req.body.toDoList
 	  if (req.body.feedBacks) evento.feedBacks = req.body.feedBacks
 	  if (req.body.objList) evento.objList = req.body.objList
+	  if (req.body.organizerCellPhone) evento.organizerCellPhone = req.body.organizerCellPhone
 	  
       evento.save(function(err) {
         if (err) {
