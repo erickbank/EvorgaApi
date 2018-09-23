@@ -54,7 +54,7 @@ router.put('/editarUsuario', passport.authenticate('jwt', { session: false}), fu
   var token = getToken(req.headers);
   if (token) {
     Usuario.findById(req.body.id, function (err, usuario) {
-      if (err) return next(err);
+      if (err) return res.json({success: false, msg: err });
 	  if (req.body.username) usuario.username = req.body.username
 	  if (req.body.password) usuario.password = req.body.password
 	  if (req.body.email) usuario.email = req.body.email
@@ -242,7 +242,7 @@ router.put('/editarEvento', passport.authenticate('jwt', { session: false}), fun
   var token = getToken(req.headers);
   if (token) {
     Evento.findById(req.body.id, function (err, evento) {
-      if (err) return next(err);
+      if (err) return res.json({success: false, msg: err });
 	  if (req.body.name) evento.name = req.body.name
 	  if (req.body.description) evento.description = req.body.description
 	  if (req.body.category) evento.category = req.body.category
