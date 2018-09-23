@@ -98,7 +98,11 @@ var EventoSchema = new Schema({
    organizerCellPhone: {
 	  type: String,
 	  default: ""
-  }
+  },
+    organizerEmail: {
+	   type: String,
+	   required:false
+   }
 });
 
 module.exports = mongoose.model('Evento', EventoSchema);
