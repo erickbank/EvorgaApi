@@ -221,8 +221,7 @@ router.post('/cadastrarEvento', passport.authenticate('jwt', { session: false}),
 	  country: req.body.country,
 	  zipCode: req.body.zipCode,
 	  planSize: req.body.planSize,
-	  spaces: req.body.spaces,
-	  rating: req.body.rating
+	  spaces: req.body.spaces
     });
 
     novoEvento.save(function(err) {
@@ -262,7 +261,6 @@ router.put('/editarEvento', passport.authenticate('jwt', { session: false}), fun
 	  if (req.body.toDoList) evento.toDoList = req.body.toDoList
 	  if (req.body.feedBacks) evento.feedBacks = req.body.feedBacks
 	  if (req.body.objList) evento.objList = req.body.objList
-	  if (req.body.rating) evento.rating = req.body.rating
 	  
       evento.save(function(err) {
         if (err) {
@@ -293,6 +291,20 @@ router.get('/getAllEventos', passport.authenticate('jwt', { session: false}), fu
   if (token) {
     Evento.find(function (err, evento) {
       if (err) return next(err);
+	  evento.map((objeto,i) => {
+		 if (objeto.feedBacks && objeto.feedBacks.length > 0 ) {
+		 var total = 0;
+		 var qtd = 0;
+		 objeto.feedBacks.map((obj,i) => {
+			 if(obj != null) {
+			 total += Number(obj.rating)
+			 qtd++
+			 }
+		 });
+		 var media = total/qtd
+		 objeto.rating = parseInt(media);
+	 }
+	  })
       res.json(evento);
     });
   } else {
@@ -305,7 +317,22 @@ router.post('/getEvento', passport.authenticate('jwt', { session: false}), funct
   if (token) {
 	Evento.findById(req.body.id, function (err, evento) {
      if (err) return next(err);
-      res.json(evento);
+	 	 if (evento.feedBacks && evento.feedBacks.length > 0 ) {
+		 var total = 0;
+		 var qtd = 0;
+		 evento.feedBacks.map((objeto,i) => {
+			 if(objeto.rating) {
+			 total += Number(objeto.rating)
+			 qtd++
+			 }
+		 });
+		 var media = total/qtd
+		 evento.rating = parseInt(media);
+		  res.json(evento)
+	 }else{
+		 res.json(evento)
+	 }
+;
 	} );
   } else {
     return res.status(403).send({success: false, msg: 'Unauthorized.'});
