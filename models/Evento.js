@@ -68,7 +68,8 @@ var EventoSchema = new Schema({
     {
  	 idExpositor: String ,
      price: Number,
-     description: String	 
+     description: String,
+     size:String	 
     }
    ],
   logoUpload: {
